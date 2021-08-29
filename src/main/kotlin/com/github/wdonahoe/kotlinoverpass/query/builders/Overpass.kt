@@ -1,11 +1,12 @@
 package com.github.wdonahoe.kotlinoverpass.query.builders
 
+@OverpassMarker
 class Overpass private constructor(private val url: String) : Rendered() {
     private var settings: Settings = settings()
 
     fun settings(initializer: Initializer<Settings> = null) =
         Settings.init(initializer).apply {
-            settings = this
+            this@Overpass.settings = this
         }
 
     override fun render(builder: StringBuilder) =

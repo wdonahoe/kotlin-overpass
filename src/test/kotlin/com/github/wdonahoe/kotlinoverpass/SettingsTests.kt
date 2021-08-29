@@ -3,7 +3,6 @@ package com.github.wdonahoe.kotlinoverpass
 import com.github.wdonahoe.kotlinoverpass.query.builders.Overpass.Companion.overpass
 import org.junit.Assert
 import org.junit.Test
-import java.time.OffsetDateTime
 
 class SettingsTests {
 
