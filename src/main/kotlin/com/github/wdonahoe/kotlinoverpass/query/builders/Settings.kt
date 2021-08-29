@@ -2,16 +2,19 @@ package com.github.wdonahoe.kotlinoverpass.query.builders
 
 import org.locationtech.jts.geom.Envelope
 import org.locationtech.jts.geom.Geometry
+import java.time.OffsetDateTime
 
 class Settings private constructor() : Element() {
     private var boundingBox = BoundingBox.DEFAULT
     private var timeout = Timeout.DEFAULT
+    private var date = Date.DEFAULT
 
     override val children: Sequence<Rendered>
         get() =
             sequence {
                 if (boundingBox != BoundingBox.DEFAULT) yield(boundingBox)
                 if (timeout != Timeout.DEFAULT) yield(timeout)
+                if (date != Date.DEFAULT) yield(date)
             }
 
     override fun render(builder: StringBuilder) =
@@ -42,6 +45,16 @@ class Settings private constructor() : Element() {
     fun timeout(seconds: Int) =
         Timeout(seconds).apply {
             timeout = this
+        }
+
+    fun date(dateTime: OffsetDateTime) =
+        Date(dateTime).apply {
+            date = this
+        }
+
+    fun date(dateTime: String) =
+        Date(dateTime).apply {
+            date = this
         }
 
     companion object {
