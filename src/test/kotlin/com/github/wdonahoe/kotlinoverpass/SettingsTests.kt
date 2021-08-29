@@ -13,9 +13,10 @@ class SettingsTests {
                 bbox(1.0, 2.0, 3.0, 4.0)
                 timeout(25)
                 date("2021-08-28T05:30:01Z")
+                maxsize(10000)
             }
-        }
+        }.build()
 
-        Assert.assertEquals("[bbox:1.0,2.0,3.0,4.0][timeout:25][date:2021-08-28T05:30:01Z];", "$query")
+        Assert.assertEquals("[bbox:1.0,2.0,3.0,4.0][timeout:25][date:2021-08-28T05:30:01Z][maxsize:10000];", "$query")
     }
 }

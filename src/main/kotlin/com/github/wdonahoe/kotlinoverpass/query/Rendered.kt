@@ -1,4 +1,4 @@
-package com.github.wdonahoe.kotlinoverpass.query.builders
+package com.github.wdonahoe.kotlinoverpass.query
 
 abstract class Rendered {
     abstract fun render(builder: StringBuilder) : StringBuilder
