@@ -1,6 +1,9 @@
 package com.github.wdonahoe.kotlinoverpass
 
+import com.github.wdonahoe.kotlinoverpass.query.builders.Overpass
 import com.github.wdonahoe.kotlinoverpass.query.builders.Overpass.Companion.overpass
+import com.github.wdonahoe.kotlinoverpass.query.builders.Settings
+import com.github.wdonahoe.kotlinoverpass.query.models.Date
 import org.junit.Assert
 import org.junit.Test
 

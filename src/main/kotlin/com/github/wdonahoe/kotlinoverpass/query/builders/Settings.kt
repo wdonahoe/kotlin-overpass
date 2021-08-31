@@ -17,16 +17,20 @@ class Settings private constructor(builder: Builder) : Rendered() {
 
     override fun render(builder: StringBuilder) =
         builder.apply {
+            val length = builder.length
+
             if (boundingBox != BoundingBox.DEFAULT) boundingBox.render(builder)
             if (timeout != Timeout.DEFAULT) timeout.render(builder)
             if (date != Date.DEFAULT) date.render(builder)
             if (maxsize != MaxSize.DEFAULT) maxsize.render(builder)
 
-            append(";")
+            if (builder.length != length) {
+                append(";")
+            }
         }
 
     @OverpassMarker
-    class Builder internal constructor() {
+    class Builder private constructor() {
         internal var boundingBox = BoundingBox.DEFAULT
         internal var timeout = Timeout.DEFAULT
         internal var date = Date.DEFAULT
@@ -60,7 +64,7 @@ class Settings private constructor(builder: Builder) : Rendered() {
         fun build() = Settings(this)
 
         companion object {
-            internal fun init(init: (Builder.() -> Unit)? = null) = Builder().apply(init ?: { })
+            internal fun init(init: (Builder.() -> Unit)) = Builder().apply(init)
         }
     }
 }
