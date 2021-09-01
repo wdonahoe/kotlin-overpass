@@ -2,29 +2,37 @@ package com.github.wdonahoe.kotlinoverpass.query.builders
 
 import com.github.wdonahoe.kotlinoverpass.query.Rendered
 import com.github.wdonahoe.kotlinoverpass.query.annotations.OverpassMarker
+import com.github.wdonahoe.kotlinoverpass.query.builders.statements.Union
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.NodeIdFilter
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.NodeRawFilter
 
 class Overpass private constructor(private val builder: Builder) : Rendered() {
-    private val settings get() = builder.settings.build()
-
-    private val children get() = builder.children.map { it.build() }
-
-    private val url = builder.url
+    private val settings get() = builder.settingsBuilder
+    private val children get() = builder.childBuilders
+    private val url get() = builder.url
 
     override fun render(builder: StringBuilder) =
         builder.apply {
-            settings.render(builder)
-            for (child in children) {
-                child.render(builder)
+            settings.build().render(builder)
+
+            if (builder.isNotEmpty() && children.isNotEmpty()) {
+                appendLine()
+            }
+
+            for (child in children.withIndex()) {
+                if (child.index < children.size - 1) {
+                    child.value.newline()
+                }
+
+                child.value.build().render(builder)
             }
         }
 
     @OverpassMarker
     class Builder internal constructor() {
-        internal var settings = Settings.Builder.init { }
+        internal var settingsBuilder = Settings.Builder.init { }
 
-        internal val children = mutableListOf<RenderedBuilder<*>>()
+        internal val childBuilders = mutableListOf<Rendered.Builder<*>>()
 
         internal var url = DEFAULT_INSTANCE
 
@@ -35,34 +43,41 @@ class Overpass private constructor(private val builder: Builder) : Rendered() {
 
         fun settings(init: (Settings.Builder.() -> Unit)) =
             run {
-                settings = Settings.Builder.init(init)
-                settings
+                settingsBuilder = Settings.Builder.init(init)
+                settingsBuilder
             }
 
         fun settings(builder: Settings.Builder) =
             apply {
-                settings = builder
+                settingsBuilder = builder
             }
 
         fun nodes(raw: String) =
             apply {
                 NodeRawFilter.Builder(raw).let { builder ->
-                    children.add(builder)
+                    childBuilders.add(builder)
                 }
             }
 
         fun nodes(vararg ids: Int) =
             apply {
                 NodeIdFilter.Builder(*ids).let { builder ->
-                    children.add(builder)
+                    childBuilders.add(builder)
                 }
             }
 
         fun nodes(ids: Collection<Int>) =
             apply {
                 NodeIdFilter.Builder(ids).let { builder ->
-                    children.add(builder)
+                    childBuilders.add(builder)
                 }
+            }
+
+        fun union(init: (Union.Builder.() -> Unit)) =
+            run {
+                val builder = Union.Builder().apply(init)
+                childBuilders.add(builder)
+                builder
             }
 
         fun build() = Overpass(this)

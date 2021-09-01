@@ -1,13 +1,19 @@
 package com.github.wdonahoe.kotlinoverpass.query.builders.statements
 
-abstract class RawFilter(name: String, builder: Builder) : QueryStatement<String>(name) {
+import com.github.wdonahoe.kotlinoverpass.query.Rendered
 
+abstract class RawFilter(
+    private val name: String,
+    builder: Builder,
+    indent: String,
+    newline: Boolean
+) : Statement<String>(
+    indent,
+    newline
+) {
     private var value = builder.value
 
-    override fun render(builder: StringBuilder) =
-        builder.apply {
-            append("$name[$value];")
-        }
+    override fun render(builder: StringBuilder) = append(builder, "$name[$value];")
 
-    abstract class Builder protected constructor(val value: String) : QueryStatement.Builder<RawFilter>()
+    abstract class Builder protected constructor(val value: String) : Statement.Builder<RawFilter>()
 }
