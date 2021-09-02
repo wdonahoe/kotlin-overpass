@@ -4,8 +4,8 @@ import com.github.wdonahoe.kotlinoverpass.query.Rendered
 
 class MaxSize(private val size: Int = 536870912) : Rendered() {
 
-    override fun render(builder: StringBuilder) =
-        builder.apply {
+    override fun render(stringBuilder: StringBuilder) =
+        stringBuilder.apply {
             append("[maxsize:$size]")
         }
 

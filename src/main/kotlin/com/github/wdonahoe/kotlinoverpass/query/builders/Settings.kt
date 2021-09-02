@@ -15,16 +15,16 @@ class Settings private constructor(builder: Builder) : Rendered() {
     private var date = builder.date
     private var maxsize = builder.maxsize
 
-    override fun render(builder: StringBuilder) =
-        builder.apply {
-            val length = builder.length
+    override fun render(stringBuilder: StringBuilder) =
+        stringBuilder.apply {
+            val length = stringBuilder.length
 
-            if (boundingBox != BoundingBox.DEFAULT) boundingBox.render(builder)
-            if (timeout != Timeout.DEFAULT) timeout.render(builder)
-            if (date != Date.DEFAULT) date.render(builder)
-            if (maxsize != MaxSize.DEFAULT) maxsize.render(builder)
+            if (boundingBox != BoundingBox.DEFAULT) boundingBox.render(stringBuilder)
+            if (timeout != Timeout.DEFAULT) timeout.render(stringBuilder)
+            if (date != Date.DEFAULT) date.render(stringBuilder)
+            if (maxsize != MaxSize.DEFAULT) maxsize.render(stringBuilder)
 
-            if (builder.length != length) {
+            if (stringBuilder.length != length) {
                 append(";")
             }
         }

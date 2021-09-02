@@ -6,9 +6,9 @@ abstract class Rendered(
     private val indent: String = "",
     private val newline: Boolean = false
 ) {
-    abstract fun render(builder: StringBuilder) : StringBuilder
+    abstract fun render(stringBuilder: StringBuilder) : StringBuilder
 
-    open fun append(builder: StringBuilder, text: String) = builder.appendNewlineIf("$indent$text", newline)
+    open fun append(stringBuilder: StringBuilder, text: String) = stringBuilder.appendNewlineIf("$indent$text", newline)
 
     override fun toString() = render(StringBuilder()).toString()
 

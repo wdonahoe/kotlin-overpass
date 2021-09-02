@@ -13,8 +13,8 @@ class Date(private val date: OffsetDateTime) : Rendered() {
         get() =
             date.atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(PATTERN))
 
-    override fun render(builder: StringBuilder) =
-        builder.apply {
+    override fun render(stringBuilder: StringBuilder) =
+        stringBuilder.apply {
             append("[date:$formatted]")
         }
 

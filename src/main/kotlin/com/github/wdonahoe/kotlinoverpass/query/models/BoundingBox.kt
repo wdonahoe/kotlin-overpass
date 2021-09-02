@@ -11,8 +11,8 @@ class BoundingBox(
 
     private constructor() : this(0.0, 0.0, 0.0, 0.0)
 
-    override fun render(builder: StringBuilder) =
-        builder.apply {
+    override fun render(stringBuilder: StringBuilder) =
+        stringBuilder.apply {
             append("[bbox:$x1,$x2,$y1,$y2]")
         }
 
