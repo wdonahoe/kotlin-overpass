@@ -1,6 +1,13 @@
 package com.github.wdonahoe.kotlinoverpass
 
 import com.github.wdonahoe.kotlinoverpass.query.builders.Overpass.Companion.overpass
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!=`
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!~`
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`=`
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`~`
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.isEqual
+import com.github.wdonahoe.kotlinoverpass.query.models.Filter
+import com.github.wdonahoe.kotlinoverpass.query.models.Operator
 import org.junit.Assert
 import org.junit.Test
 
@@ -52,6 +59,30 @@ class NodeTests {
             """
                 [timeout:25];
                 node(1);
+            """.trimIndent(),
+            query.toString()
+        )
+    }
+
+    @Test
+    fun test_tag_filter_nodes() {
+        val query = overpass {
+            nodes(
+                "amenity" `=` "fire station",
+                "address" `~` "Fairfax"
+            )
+            nodes(
+                "route" `!~` "66",
+                "key" `!=` "value"
+            )
+            nodes("contains spaces" `=` "also contains spaces")
+        }.build()
+
+        Assert.assertEquals(
+            """
+                node[amenity="fire station"][address~Fairfax];
+                node[route!~66][key!=value];
+                node["contains spaces"="also contains spaces"];
             """.trimIndent(),
             query.toString()
         )

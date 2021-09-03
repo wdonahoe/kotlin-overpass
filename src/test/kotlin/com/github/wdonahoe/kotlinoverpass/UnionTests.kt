@@ -12,7 +12,7 @@ class UnionTests {
                 nodes(1,2,3)
                 nodes(4,5,6)
             }
-        }.build()
+        }
 
         Assert.assertEquals(
             """

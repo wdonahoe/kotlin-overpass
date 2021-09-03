@@ -4,6 +4,8 @@ import com.github.wdonahoe.kotlinoverpass.query.builders.statements.Difference
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.Statement
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.Union
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.Node
+import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.NodeTagFilter
+import com.github.wdonahoe.kotlinoverpass.query.models.Filter
 
 abstract class BaseUnion(
     protected val builder: Builder<*>,
@@ -36,6 +38,21 @@ abstract class BaseUnion(
         fun nodes(ids: Collection<Int>) =
             apply {
                 Node.nodes(ids).let { builder ->
+                    childBuilders.add(builder)
+                }
+            }
+
+        fun nodes(vararg filters: Filter) =
+            apply {
+                Node.nodes(*filters).let { builder ->
+                    childBuilders.add(builder)
+                }
+            }
+
+        @JvmName("nodes1")
+        fun nodes(filters: Collection<Filter>) =
+            apply {
+                Node.nodes(filters).let { builder ->
                     childBuilders.add(builder)
                 }
             }
