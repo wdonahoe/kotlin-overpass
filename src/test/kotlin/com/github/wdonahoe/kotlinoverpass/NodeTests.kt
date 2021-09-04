@@ -5,9 +5,9 @@ import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!=`
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!~`
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`=`
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`~`
-import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.isEqual
-import com.github.wdonahoe.kotlinoverpass.query.models.Filter
-import com.github.wdonahoe.kotlinoverpass.query.models.Operator
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.caseInsensitive
+import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.notExists
+import com.github.wdonahoe.kotlinoverpass.query.models.BoundingBox
 import org.junit.Assert
 import org.junit.Test
 
@@ -73,16 +73,32 @@ class NodeTests {
             )
             nodes(
                 "route" `!~` "66",
-                "key" `!=` "value"
+                ("key" `!=` "value").caseInsensitive(),
             )
             nodes("contains spaces" `=` "also contains spaces")
+            nodes("name".notExists())
         }.build()
 
         Assert.assertEquals(
             """
                 node[amenity="fire station"][address~Fairfax];
-                node[route!~66][key!=value];
+                node[route!~66][key!=value,i];
                 node["contains spaces"="also contains spaces"];
+                node[!name];
+            """.trimIndent(),
+            query.toString()
+        )
+    }
+
+    @Test
+    fun test_bbox_filter() {
+        val query = overpass()
+            .nodes(BoundingBox(10.0, 11.0, 12.0, 13.0))
+            .build()
+
+        Assert.assertEquals(
+            """
+                node(10.0,11.0,12.0,13.0);
             """.trimIndent(),
             query.toString()
         )

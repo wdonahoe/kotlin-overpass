@@ -19,4 +19,10 @@ object FilterExtensions {
     infix fun String.`!~`(value: String) = isNotMatch(value)
 
     fun String.isNotMatch(value: String) = Filter(this, Operator.NotMatches, value)
+
+    fun String.notExists() = Filter(this, Operator.NotExists, "", position = Operator.Position.Prefix)
+
+    fun Filter.caseInsensitive() = apply {
+        isCaseInsensitive = true
+    }
 }

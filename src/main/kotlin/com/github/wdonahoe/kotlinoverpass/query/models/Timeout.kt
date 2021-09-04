@@ -2,7 +2,7 @@ package com.github.wdonahoe.kotlinoverpass.query.models
 
 import com.github.wdonahoe.kotlinoverpass.query.Rendered
 
-class Timeout(private val seconds: Int = 180) : Rendered() {
+data class Timeout(private val seconds: Int = 180) : Rendered() {
 
     override fun render(stringBuilder: StringBuilder) =
         stringBuilder.apply {

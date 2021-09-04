@@ -2,7 +2,7 @@ package com.github.wdonahoe.kotlinoverpass.query.builders.statements.node
 
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.RawFilter
 
-class NodeRawFilter(
+class RawFilter(
     builder: Builder,
     indent: String,
     newline: Boolean
@@ -15,6 +15,7 @@ class NodeRawFilter(
 
     class Builder(value: String) : RawFilter.Builder(value) {
 
-        override fun build() = NodeRawFilter(this, indent, newline)
+        override fun build() =
+            RawFilter(this, indent, newline)
     }
 }

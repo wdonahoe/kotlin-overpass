@@ -5,7 +5,8 @@ enum class Operator(val value: String) {
     NotEquals("!="),
     Matches("~"),
     NotMatches("!~"),
-    Exists("");
+    Exists(""),
+    NotExists("!");
 
     enum class Position {
         Prefix,

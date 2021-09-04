@@ -1,13 +1,13 @@
-package com.github.wdonahoe.kotlinoverpass.query.builders.statements.node
+package com.github.wdonahoe.kotlinoverpass.query.builders.statements.way
 
 import com.github.wdonahoe.kotlinoverpass.query.builders.statements.IdFilter
 
-class NodeIdFilter(
+class IdFilter(
     builder: Builder,
     indent: String,
     newline: Boolean
 ) : IdFilter(
-    "node",
+    "way",
     builder,
     indent,
     newline
@@ -17,6 +17,7 @@ class NodeIdFilter(
 
         constructor(ids: Collection<Int>) : this(*ids.toIntArray())
 
-        override fun build() = NodeIdFilter(this, indent, newline)
+        override fun build() =
+            IdFilter(this, indent, newline)
     }
 }

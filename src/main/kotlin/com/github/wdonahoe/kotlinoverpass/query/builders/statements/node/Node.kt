@@ -1,15 +1,18 @@
 package com.github.wdonahoe.kotlinoverpass.query.builders.statements.node
 
+import com.github.wdonahoe.kotlinoverpass.query.models.BoundingBox
 import com.github.wdonahoe.kotlinoverpass.query.models.Filter
 
 object Node {
-    fun nodes(raw: String) = NodeRawFilter.Builder(raw)
+    fun nodes(raw: String) = RawFilter.Builder(raw)
 
-    fun nodes(vararg ids: Int) = NodeIdFilter.Builder(*ids)
+    fun nodes(vararg ids: Int) = IdFilter.Builder(*ids)
 
-    fun nodes(ids: Collection<Int>) = NodeIdFilter.Builder(ids)
+    fun nodes(ids: Collection<Int>) = IdFilter.Builder(ids)
 
-    fun nodes(vararg filters: Filter) = NodeTagFilter.Builder(filters.asList())
+    fun nodes(filters: Collection<Filter>) = TagFilter.Builder(filters)
 
-    fun nodes(filters: Collection<Filter>) = NodeTagFilter.Builder(filters)
+    fun nodes(vararg filters: Filter) = TagFilter.Builder(filters.asList())
+
+    fun nodes(bbox: BoundingBox) = BboxFilter.Builder(bbox)
 }

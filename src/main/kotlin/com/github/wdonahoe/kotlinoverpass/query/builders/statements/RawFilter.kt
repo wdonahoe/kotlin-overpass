@@ -11,7 +11,7 @@ abstract class RawFilter(
 ) {
     private var value = builder.value
 
-    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name[$value];")
+    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name[$value]$;")
 
     abstract class Builder protected constructor(val value: String) : Statement.Builder<RawFilter>()
 }

@@ -25,5 +25,5 @@ abstract class TagFilter(
             }.toString()
         )
 
-    abstract class Builder protected constructor(val filters: Collection<Filter>) : Statement.Builder<TagFilter>()
+    abstract class Builder protected constructor(internal val filters: Collection<Filter>) : Statement.Builder<TagFilter>()
 }

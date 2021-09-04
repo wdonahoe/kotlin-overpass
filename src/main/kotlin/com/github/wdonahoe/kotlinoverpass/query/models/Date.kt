@@ -5,7 +5,7 @@ import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class Date(private val date: OffsetDateTime) : Rendered() {
+data class Date(private val date: OffsetDateTime) : Rendered() {
 
     constructor(date: String) : this(OffsetDateTime.parse(date))
 

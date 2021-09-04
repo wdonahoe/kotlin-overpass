@@ -4,7 +4,8 @@ data class Filter(
     val key: String,
     val operator: Operator,
     val value: String,
-    val position: Operator.Position = Operator.Position.Infix
+    val position: Operator.Position = Operator.Position.Infix,
+    var isCaseInsensitive: Boolean = false
 ) {
     override fun toString(): String {
         val sb = StringBuilder()
@@ -22,7 +23,7 @@ data class Filter(
         }
 
         sb.append(if (value.contains(spaces)) "\"$value\"" else value)
-        sb.append("]")
+        sb.append("${if (isCaseInsensitive) ",i" else ""}]")
 
         return sb.toString()
     }
