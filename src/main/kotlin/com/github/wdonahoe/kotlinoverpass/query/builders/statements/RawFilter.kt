@@ -7,11 +7,12 @@ abstract class RawFilter(
     newline: Boolean
 ) : Statement(
     indent,
-    newline
+    newline,
+    builder.namedSet
 ) {
     private var value = builder.value
 
-    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name[$value]$;")
+    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name[$value]${renderToSet()};")
 
     abstract class Builder protected constructor(val value: String) : Statement.Builder<RawFilter>()
 }

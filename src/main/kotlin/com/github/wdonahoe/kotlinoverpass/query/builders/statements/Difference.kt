@@ -6,7 +6,9 @@ class Difference private constructor(
     newline: Boolean
 ) : Statement(
     indent,
-    newline) {
+    newline,
+    builder.namedSet
+) {
 
     private val statement1 = builder.statement1
     private val statement2 = builder.statement2
@@ -18,7 +20,7 @@ class Difference private constructor(
                 statement1.indent(builder.indent).newline().build().render(this)
                 appendLine("${statement1.indent}-")
                 statement2.indent(builder.indent).newline().build().render(this)
-                append("${builder.indent});")
+                append("${builder.indent})${renderToSet()};")
             }
             append(
                 stringBuilder,

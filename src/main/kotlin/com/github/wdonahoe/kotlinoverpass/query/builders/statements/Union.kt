@@ -18,7 +18,7 @@ class Union(
                 for (statement in childBuilders) {
                     statement.indent(builder.indent).newline().build().render(this)
                 }
-                append("${builder.indent});")
+                append("${builder.indent})${renderToSet()};")
             }
             append(
                 stringBuilder,

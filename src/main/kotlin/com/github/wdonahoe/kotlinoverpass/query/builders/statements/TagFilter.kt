@@ -9,7 +9,8 @@ abstract class TagFilter(
     newline: Boolean
 ) : Statement(
     indent,
-    newline
+    newline,
+    builder.namedSet
 ) {
     private val filters = builder.filters
 
@@ -21,7 +22,7 @@ abstract class TagFilter(
                 for (filter in filters) {
                     append(filter.toString())
                 }
-                append(";")
+                append("${renderToSet()};")
             }.toString()
         )
 

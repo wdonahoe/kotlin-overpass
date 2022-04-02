@@ -9,11 +9,12 @@ abstract class BboxFilter(
     newline: Boolean
 ) : Statement(
     indent,
-    newline
+    newline,
+    builder.namedSet
 ) {
     private var bbox = builder.bbox
 
-    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name(${bbox.x1},${bbox.x2},${bbox.y1},${bbox.y2});")
+    override fun render(stringBuilder: StringBuilder) = append(stringBuilder, "$name(${bbox.x1},${bbox.x2},${bbox.y1},${bbox.y2})${renderToSet()};")
 
     abstract class Builder protected constructor(val bbox: BoundingBox) : Statement.Builder<BboxFilter>()
 }

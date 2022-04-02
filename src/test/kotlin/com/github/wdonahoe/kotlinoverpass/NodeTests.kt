@@ -1,6 +1,8 @@
 package com.github.wdonahoe.kotlinoverpass
 
 import com.github.wdonahoe.kotlinoverpass.query.builders.Overpass.Companion.overpass
+import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.IdFilter
+import com.github.wdonahoe.kotlinoverpass.query.builders.statements.node.TagFilter
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!=`
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`!~`
 import com.github.wdonahoe.kotlinoverpass.query.extensions.FilterExtensions.`=`
@@ -99,6 +101,36 @@ class NodeTests {
         Assert.assertEquals(
             """
                 node(10.0,11.0,12.0,13.0);
+            """.trimIndent(),
+            query.toString()
+        )
+    }
+
+    @Test
+    fun test_blah() {
+        val query = overpass {
+            nodes(5,6,7)
+            nodes(
+                IdFilter
+                    .Builder(1,2,3)
+                    .toSet("a"))
+            nodes(
+                TagFilter
+                    .Builder(
+                        listOf(
+                            "amenity" `=` "fire station",
+                            "address" `~` "Fairfax"
+                        )
+                    )
+                    .toSet("b")
+            )
+        }.build()
+
+        Assert.assertEquals(
+            """
+                node(id:5,6,7);
+                node(id:1,2,3)->.a;
+                node[amenity="fire station"][address~Fairfax]->.b;
             """.trimIndent(),
             query.toString()
         )

@@ -66,6 +66,11 @@ abstract class BaseUnion(
                 }
             }
 
+        fun <M : Statement> nodes(builder: Statement.Builder<M>) =
+            apply {
+                childBuilders.add(builder)
+            }
+
         fun ways(raw: String) =
             apply {
                 Way.ways(raw).let { builder ->
